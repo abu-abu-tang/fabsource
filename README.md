@@ -1,6 +1,8 @@
 # FabSource 晶圆厂干式真空泵寻源比选工作台
 
-在线演示：https://fabsource.vercel.app
+在线演示（国内网络优先）：https://abu-abu-tang.github.io/fabsource/
+
+备用地址（Vercel）：https://fabsource.vercel.app
 
 ![FabSource overview](public/screenshots/overview.png)
 
@@ -81,6 +83,7 @@ Next.js 16 · TypeScript · Tailwind CSS 4 · Recharts · Zustand · ExcelJS · 
 ## 部署
 
 仓库可直接导入 Vercel 部署。应用主体为静态/客户端工作区，可选 AI 通过 Next.js Route Handler 转发到用户配置的 OpenAI 兼容服务；不需要数据库或服务端持久化。
+
 
 
 
