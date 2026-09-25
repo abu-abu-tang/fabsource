@@ -1,5 +1,7 @@
 # FabSource 晶圆厂干式真空泵寻源比选工作台
 
+在线演示：https://fabsource.vercel.app
+
 ![FabSource overview](public/screenshots/overview.png)
 
 FabSource 是一个面向**晶圆制造厂设备/关键备件采购**的可解释决策 Demo。它以 CVD Sub-fab 使用 6 台干式真空泵为场景，将技术硬门槛、五年 TCO、交付服务、可靠性、供应风险和数据来源放进同一套可复算模型。
@@ -71,9 +73,15 @@ Next.js 16 · TypeScript · Tailwind CSS 4 · Recharts · Zustand · ExcelJS · 
 - [评分公式](docs/SCORING.md)
 - [数据字典](docs/DATA_DICTIONARY.md)
 - [5 分钟演示脚本](docs/DEMO_SCRIPT.md)
+- [新手教程](docs/NEW_USER_GUIDE_CN.md)
+- [通用采购平台路线图](docs/PRODUCT_ROADMAP_CN.md)
 - [面试追问准备](docs/INTERVIEW_QA.md)
 - [简历描述](docs/RESUME_BULLETS.md)
 
 ## 部署
 
 仓库可直接导入 Vercel 部署。应用主体为静态/客户端工作区，可选 AI 通过 Next.js Route Handler 转发到用户配置的 OpenAI 兼容服务；不需要数据库或服务端持久化。
+
+
+
+

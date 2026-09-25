@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 
 test("completes the core sourcing decision flow", async ({ page }) => {
   await expect(page.getByText("FabSource", { exact: true })).toBeVisible();
-  await expect(page.getByText("教学模拟报价").first()).toBeVisible();
+  await expect(page.getByText("公开参数与模拟报价").first()).toBeVisible();
   await expect(page.getByText("当前供应商排序")).toBeVisible();
 
   await page.getByRole("button", { name: "决策分析", exact: true }).click();
@@ -61,7 +61,7 @@ test("keeps desktop and mobile pages free of body-level horizontal overflow", as
     ["报价归一", "报价", "报价归一与商务口径"],
     ["决策分析", "决策", "多准则决策与权重敏感性"],
     ["推荐与谈判", "推荐", "首选、备选与谈判策略"],
-    ["来源与审计", "来源", "数据来源与审计轨迹"],
+    ["来源与审计", "来源", "数据来源与审计"],
   ] as const;
 
   for (const [tab, , heading] of tabs) {
@@ -81,4 +81,26 @@ test("keeps desktop and mobile pages free of body-level horizontal overflow", as
   }
 });
 
+
+
+
+test("opens the new user guide from the workspace", async ({ page }) => {
+  await page.getByRole("link", { name: "新手教程", exact: true }).click();
+  await expect(page).toHaveURL(/\/guide$/);
+  await expect(page.getByRole("heading", { level: 1, name: "FabSource 新手教程" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "先记住一句话" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "快速术语表" })).toBeVisible();
+
+  const desktop = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth }));
+  expect(desktop.scrollWidth).toBeLessThanOrEqual(desktop.width + 1);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1, name: "FabSource 新手教程" })).toBeVisible();
+  const mobile = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth }));
+  expect(mobile.scrollWidth).toBeLessThanOrEqual(mobile.width + 1);
+
+  await page.getByRole("link", { name: "返回工作台", exact: true }).click();
+  await expect(page).toHaveURL(/\/$/);
+});
 

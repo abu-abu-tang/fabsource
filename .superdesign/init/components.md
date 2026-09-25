@@ -1,3 +1,10 @@
+# Shared UI Components
+
+Shared primitives are implemented in a lightweight local component layer with Tailwind CSS. Only these primitives are reused across page-level panels.
+
+### `src/components/ui.tsx`
+
+```tsx
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -85,3 +92,5 @@ export function Metric({ label, value, note, tone = "slate" }: { label: string; 
     </div>
   );
 }
+
+```

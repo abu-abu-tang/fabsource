@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "/": {
+      "targetKind": "existing-ui",
+      "projectId": "2daea84f-c679-4517-8ced-98579085d4a0",
+      "activeDraftId": "2d298ef5-936c-4bd5-a2e8-f4ecd88d4ba5",
+      "designSystemPath": ".superdesign/design-system.md",
+      "referenceIds": [],
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        ".superdesign/init/theme.md",
+        "src/components/ui.tsx",
+        "src/components/fabsource-app.tsx",
+        "src/components/overview-panel.tsx",
+        "src/components/decision-panel.tsx",
+        "src/app/globals.css"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "3a531c94e67e05ac4e285812da1b3f595c6e393832f4a9f1d85fd6bf8be1607e",
+        ".superdesign/init/theme.md": "69c0064bf670852ad3e5cc2b3e74a62bc765baa6eedd156e6e554b4be070b2eb",
+        "src/components/ui.tsx": "d6b89247f2545675bdc1947fa435ac741297a34145fc83166769de13a9969056",
+        "src/components/fabsource-app.tsx": "116ccc21ce1740b9e15dec66f358479851253d6e87c7f17b4a15e8b14cdcb426",
+        "src/components/overview-panel.tsx": "066c5fea7d3306dbe97dec4629267eea613ed5ed87346ef443e4e842683e8747",
+        "src/components/decision-panel.tsx": "fec7ea124d6047605eeaa3cf014c2058587e86116e758906076f0ebd079aac55",
+        "src/app/globals.css": "ffcc4d852775153b7d9cf303a188cbd879c3d7c3671b76b5ec1b4def7865acc2"
+      },
+      "components": [],
+      "drafts": {
+        "2d298ef5-936c-4bd5-a2e8-f4ecd88d4ba5": {
+          "title": "FabSource 项目总览",
+          "visualDirection": "simple clean workspace exploration; fidelity warning: generated draft changed supplier facts and assumptions and is not approved for implementation",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-09-24T14:28:02.1522625Z"
+    }
+  }
+}

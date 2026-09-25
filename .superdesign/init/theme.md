@@ -1,3 +1,23 @@
+# Theme
+
+## Token Summary
+- Background: `#f6f7f7`
+- Surface: `#ffffff`
+- Foreground: `#111827`
+- Muted: `#667085`
+- Border: `#e5e7eb`
+- Primary: `#0f766e`
+- Avoid: gradients, decorative blur, heavy shadows, excess colors.
+- Typography: Aptos / HarmonyOS Sans SC / PingFang SC / Microsoft YaHei.
+- Radius: 8-12px; dense data surfaces use 12px.
+- Spacing: 4px base with 8/12/16/24/32/40px rhythm.
+- Motion: color and 300ms width transitions only.
+
+## Raw Theme Source
+
+### `src/app/globals.css`
+
+```css
 @import "tailwindcss";
 
 :root {
@@ -100,3 +120,23 @@ input[type="number"]::-webkit-outer-spin-button {
     break-inside: avoid;
   }
 }
+
+```
+
+### `next.config.ts`
+
+```ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  allowedDevOrigins: ["127.0.0.1"],
+  experimental: {
+    optimizePackageImports: ["lucide-react", "recharts"],
+  },
+};
+
+export default nextConfig;
+
+
+```
