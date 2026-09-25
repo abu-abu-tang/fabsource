@@ -2,18 +2,14 @@
 
 import { useMemo, useState } from "react";
 import type { AiAnalysis, FabSourceDataset, ScoreResult, WeightSet } from "@/lib/types";
+import { requestDirectAiAnalysis, type AiProviderSettings } from "@/lib/ai-client";
 import { fallbackAnalysis } from "@/lib/calculations";
 import { useFabSourceStore } from "@/lib/store";
 import { formatCny } from "@/lib/utils";
 import { Badge, Button, Card, SectionHeading } from "@/components/ui";
 
-interface ProviderSettings {
-  baseUrl: string;
-  model: string;
-  apiKey: string;
-}
 
-const defaultProvider: ProviderSettings = {
+const defaultProvider: AiProviderSettings = {
   baseUrl: "https://api.openai.com/v1",
   model: "gpt-4.1-mini",
   apiKey: "",
@@ -23,11 +19,11 @@ export function RecommendationPanel({ dataset, results, weights }: { dataset: Fa
   const addAudit = useFabSourceStore((state) => state.addAudit);
   const fallback = useMemo(() => fallbackAnalysis(results), [results]);
   const [generatedAnalysis, setGeneratedAnalysis] = useState<{ fingerprint: string; analysis: AiAnalysis } | null>(null);
-  const [provider, setProvider] = useState<ProviderSettings>(() => {
+  const [provider, setProvider] = useState<AiProviderSettings>(() => {
     if (typeof window === "undefined") return defaultProvider;
     try {
       const stored = sessionStorage.getItem("fabsource-ai-provider");
-      return stored ? { ...defaultProvider, ...JSON.parse(stored) as Partial<ProviderSettings> } : defaultProvider;
+      return stored ? { ...defaultProvider, ...JSON.parse(stored) as Partial<AiProviderSettings> } : defaultProvider;
     } catch {
       return defaultProvider;
     }
@@ -40,7 +36,7 @@ export function RecommendationPanel({ dataset, results, weights }: { dataset: Fa
   const resultFingerprint = results.map((result) => `${result.supplierId}:${result.total.toFixed(2)}:${result.rank}`).join("|");
   const currentAnalysis = generatedAnalysis?.fingerprint === resultFingerprint ? generatedAnalysis.analysis : fallback;
 
-  function saveProvider(next: ProviderSettings) {
+  function saveProvider(next: AiProviderSettings) {
     setProvider(next);
     sessionStorage.setItem("fabsource-ai-provider", JSON.stringify(next));
   }
@@ -70,13 +66,18 @@ export function RecommendationPanel({ dataset, results, weights }: { dataset: Fa
     }
 
     try {
-      const response = await fetch("/api/ai/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ provider, context }),
-      });
-      const payload = await response.json() as AiAnalysis & { error?: string };
-      if (!response.ok) throw new Error(payload.error || "模型分析失败");
+      let payload: AiAnalysis & { error?: string };
+      if (process.env.NEXT_PUBLIC_STATIC_EXPORT === "true") {
+        payload = await requestDirectAiAnalysis(provider, context);
+      } else {
+        const response = await fetch("/api/ai/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ provider, context }),
+        });
+        payload = await response.json() as AiAnalysis & { error?: string };
+        if (!response.ok) throw new Error(payload.error || "模型分析失败");
+      }
       setGeneratedAnalysis({ fingerprint: resultFingerprint, analysis: payload });
       addAudit({ type: "ai_analysis", description: `使用 ${provider.model} 生成采购分析` });
     } catch (cause) {
@@ -171,3 +172,6 @@ export function RecommendationPanel({ dataset, results, weights }: { dataset: Fa
     </div>
   );
 }
+
+
+
